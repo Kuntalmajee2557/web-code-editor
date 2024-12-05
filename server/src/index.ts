@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
     console.log("socket connected", socket.id)
 
     socket.on("terminal:write", (data: string) => {
-        ptyProcess.write(data + "\r")
+        ptyProcess.write(data)
     })
 })
 
