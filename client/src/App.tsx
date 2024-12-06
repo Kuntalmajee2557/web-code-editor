@@ -17,7 +17,7 @@ function App() {
   return (
     <div>
       <Terminal />
-      <Tree fileObj={fileTree} />
+      <Tree tree={fileTree} />
     </div>
   )
 }
