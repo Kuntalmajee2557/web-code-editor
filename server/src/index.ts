@@ -6,6 +6,7 @@ import path from 'path'
 import os from "os"
 import fs from 'fs/promises'
 import cors from 'cors'
+import chokidar from 'chokidar'
 
 
 const shell = process.env['/bin/sh'] as string;
@@ -38,6 +39,10 @@ io.on('connection', (socket) => {
         ptyProcess.write(data)
     })
 })
+
+chokidar.watch('./user').on('all', (event, path) => {
+    io.emit("file:refresh", path);
+  });
 
 app.get('/files', async (req, res) => {
     const fileTree = await generateFiles("./user");
