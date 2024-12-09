@@ -14,7 +14,7 @@ const ptyProcess = nodePty.spawn(shell, [], {
     name: 'xterm-color',
     cols: 80,
     rows: 30,
-    cwd: process.env.INIT_CWD || process.cwd(),
+    cwd: process.env.INIT_CWD + "/user",
     env: process.env
 });
 
@@ -38,6 +38,10 @@ io.on('connection', (socket) => {
     socket.on("terminal:write", (data: string) => {
         ptyProcess.write(data)
     })
+
+    socket.on("file:change", async ({path, content}) =>{
+        await fs.writeFile(`./user${path}`, content);
+    })
 })
 
 chokidar.watch('./user').on('all', (event, path) => {
@@ -49,6 +53,13 @@ app.get('/files', async (req, res) => {
     res.json({tree : fileTree});
 })
 
+app.get("/files/content", async (req, res) => {
+    const path = req.query.path as string | undefined;
+    if(path){
+        const content = await fs.readFile(`./user${path}`, "utf-8");
+        res.json({content})
+    }
+})
 
 server.listen(3000, () => {
     console.log("listening the port 3000")
