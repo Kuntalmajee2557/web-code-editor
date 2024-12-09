@@ -35,7 +35,7 @@ function FileTreeNode({ fileName, nodes, path, onSelect }: FileTreeNodeProps) {
 
 function Tree({ tree, onSelect }: { tree: { [key: string]: any }, onSelect: any }) {
     return (
-        <FileTreeNode fileName='/' nodes={tree} path='' onSelect={onSelect}/>
+        <FileTreeNode fileName='' nodes={tree} path='' onSelect={onSelect}/>
     )
 }
 
