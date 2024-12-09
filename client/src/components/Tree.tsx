@@ -3,21 +3,28 @@ import "./Tree.css"
 
 interface FileTreeNodeProps {
     fileName: string;
-    nodes: { [key: string]: any } | any
+    nodes: { [key: string]: any } | any,
+    path: string,
+    onSelect: any
 }
 
-function FileTreeNode({ fileName, nodes }: FileTreeNodeProps) {
+function FileTreeNode({ fileName, nodes, path, onSelect }: FileTreeNodeProps) {
     const isDir: boolean = !!nodes;
     return (
-        <div style={{ "paddingLeft": "20px" }}>
-            <p className={isDir ? "" : "file-node "}>{fileName}</p>
-            {nodes && (
+        <div style={{ "paddingLeft": "20px" }} onClick={(e) => {
+            e.stopPropagation()
+            if(isDir) return;
+            onSelect(path)
+
+        }}>
+            <p className={isDir ? "" : "file-node "} >{fileName}</p>
+            {nodes && fileName != 'node_modules' && (
                 <ul>
                     {Object.keys(nodes as Object).map((child) =>
 
                     (
                         <li key={child}>
-                            <FileTreeNode fileName={child} nodes={nodes[child]} /></li>
+                            <FileTreeNode fileName={child} nodes={nodes[child]} path={path + "/" + child} onSelect={onSelect} /></li>
                     )
                     )}
                 </ul>
@@ -26,9 +33,9 @@ function FileTreeNode({ fileName, nodes }: FileTreeNodeProps) {
     )
 }
 
-function Tree({ tree }: { tree: { [key: string]: any } }) {
+function Tree({ tree, onSelect }: { tree: { [key: string]: any }, onSelect: any }) {
     return (
-        <FileTreeNode fileName='/' nodes={tree} />
+        <FileTreeNode fileName='/' nodes={tree} path='' onSelect={onSelect}/>
     )
 }
 
