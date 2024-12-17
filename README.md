@@ -75,8 +75,15 @@ npm install
 cd ../client
 npm install
 ```
+3. Create User Folder
+```bash
+# In the backend directory
+cd backend
+mkdir user
+```
+**Important:** The `user` folder is crucial as it serves as the working directory for files created or edited in the web code editor.
 
-3. Start the development servers
+4. Start the development servers
 ```bash
 # Start backend (port 3000)
 cd server
