@@ -68,21 +68,21 @@ cd web-code-editor
 2. Install dependencies
 ```bash
 # For backend
-cd backend
+cd server
 npm install
 
 # For frontend
-cd ../frontend
+cd ../client
 npm install
 ```
 
 3. Start the development servers
 ```bash
 # Start backend (port 3000)
-cd backend
+cd server
 npm run dev
 
 # Start frontend (typically port 5173)
-cd ../frontend
+cd ../client
 npm run dev
 ```
